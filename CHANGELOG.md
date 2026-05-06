@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- **`packages/javascript/package.json`: add `repository`, `homepage`, `bugs`, `keywords`, `author` fields.** putitoutthere publishes with `npm publish --provenance`, which requires a `repository` field so npm can verify the package's source matches the trusted publisher. Without it, the first OIDC release attempt failed with `npm publish --provenance requires a \`repository\` field in package.json` (release run #45). This is the fix; while the file was open, also added the standard npm metadata fields so the npmjs.com page renders the homepage, issue tracker, and search keywords. (#71 follow-up)
+
 ### Added
 - **`packages/javascript/README.md`** — what npmjs.com displays for the `coaxer` npm package. Mirrors the Python README's shape (Install / Quick start / `CoaxedPrompt` / Structured output) and points at the docs site. Previously the `files` array in `package.json` listed `README.md` but the file didn't exist, so the npm page rendered without one. (#70)
 

@@ -2,6 +2,26 @@
   "name": "coaxer",
   "version": "0.0.0",
   "description": "Label examples. Derive the prompt. Consume it as a string.",
+  "homepage": "https://thekevinscott.github.io/coaxer/",
+  "bugs": {
+    "url": "https://github.com/thekevinscott/coaxer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thekevinscott/coaxer.git",
+    "directory": "packages/javascript"
+  },
+  "license": "MIT",
+  "author": "Kevin Scott",
+  "keywords": [
+    "prompt",
+    "prompt-engineering",
+    "llm",
+    "anthropic",
+    "openai",
+    "structured-output",
+    "zod"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -51,6 +71,5 @@
   },
   "engines": {
     "node": ">=20"
-  },
-  "license": "MIT"
+  }
 }
