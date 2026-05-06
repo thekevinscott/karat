@@ -39,6 +39,12 @@ No migration required.
 
 ---
 
+## Unreleased — npm package: add `repository` + metadata for provenance
+
+No migration required.
+
+---
+
 ## Unreleased — remove `bootstrap-npm.yml`; add JS package README
 
 No migration required.
