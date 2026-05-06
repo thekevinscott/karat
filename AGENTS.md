@@ -112,6 +112,15 @@ Changes to any of these require the full 5-section template. Anything else takes
 
 **TDD order: e2e + integration first (both red), then unit.** Every PR that ships a behavioral change lands its e2e tests *and* its integration tests in the same change, both starting RED, and both expected to be GREEN by the time the PR is ready. Unit tests follow once the outer rings are green and the design has settled. Integration without e2e — or e2e without integration — is incomplete: the integration ring proves the wiring; the e2e ring proves it works against a real provider.
 
+**Red-first PR workflow (mandatory).** When fixing a bug or adding a behavioral change, the test commits land *before* the source commits, in the same branch, and the PR is opened with the tests in their RED state. Concretely:
+
+1. Write the integration test(s) that capture the contract the fix must satisfy. They must be RED against the unmodified source.
+2. Write the e2e test(s) that exercise the same contract end-to-end against a real provider. They must also be RED.
+3. Commit both, push, and open the PR. The integration ring's CI job (`Test Integration`) must report failing for the new tests on the open PR — that's the visible RED state. (E2E tests are not in CI per the existing policy; their RED state is verified locally and noted in the PR description.)
+4. *Only then* commit the source changes that turn the tests GREEN. Push again; the same CI checks must report passing on the head commit.
+
+The point: a reviewer scrolling the PR's CI history must see at least one failing CI run on the test-only commits, followed by a passing CI run on the fix commits. No squashing the test+fix into a single commit before push — the audit trail is the proof. After review, the merge strategy can collapse them.
+
 ### Coverage policy
 
 **New code ships at 100% line coverage.** New modules, new functions, and new branches added to existing functions must be fully covered by tests. Existing-code shortfalls are converted opportunistically alongside other changes — no backfill sprint.
