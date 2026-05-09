@@ -233,9 +233,7 @@ def describe_distill_with_gepa():
                 '"includes_what_it_does":false}'
             )
             score = metric(_Obj(output=gold_pretty), _Obj(output=pred_compact))
-            assert score == 1.0, (
-                f"semantically-equivalent JSON should score 1.0, got {score}"
-            )
+            assert score == 1.0, f"semantically-equivalent JSON should score 1.0, got {score}"
 
         def it_gives_partial_credit_on_json_field_disagreement(tmp_path: Path) -> None:
             """One of two fields wrong = score in (0, 1) so GEPA sees a gradient."""
@@ -243,9 +241,7 @@ def describe_distill_with_gepa():
             gold = '{"a": false, "b": false}'
             pred = '{"a": false, "b": true}'
             score = metric(_Obj(output=gold), _Obj(output=pred))
-            assert 0.0 < score < 1.0, (
-                f"partial match should score in (0, 1), got {score}"
-            )
+            assert 0.0 < score < 1.0, f"partial match should score in (0, 1), got {score}"
 
         def it_falls_back_to_exact_match_on_non_json(tmp_path: Path) -> None:
             """Non-JSON outputs (e.g. enum strings) keep exact-match behavior."""

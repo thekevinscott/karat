@@ -129,8 +129,7 @@ def describe_distill():
                 for m in re.findall(r"score[^0-9]*([0-9]+(?:\.[0-9]+)?)", haystack, re.IGNORECASE)
             ]
             assert scores, (
-                "expected GEPA to emit at least one score line; "
-                f"stdout/stderr:\n{haystack!r}"
+                f"expected GEPA to emit at least one score line; stdout/stderr:\n{haystack!r}"
             )
             assert any(s > 0 for s in scores), (
                 "GEPA reported only zero scores — the silent-failure case from #75. "
