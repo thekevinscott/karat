@@ -45,6 +45,12 @@ No migration required.
 
 ---
 
+## Unreleased — JSON-aware default metric for `coax --optimizer gepa`
+
+No migration required.
+
+---
+
 ## Unreleased — try-pr skill
 
 No migration required.

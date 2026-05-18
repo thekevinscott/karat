@@ -105,6 +105,17 @@ def _optimize(
     raise ValueError(f"Unknown optimizer: {optimizer!r}")
 
 
+def _parse_json_object(value: Any) -> dict | None:
+    """Return value parsed as a JSON object, or None if not a JSON object string."""
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = json.loads(value)
+    except (json.JSONDecodeError, ValueError):
+        return None
+    return parsed if isinstance(parsed, dict) else None
+
+
 def _run_gepa(
     signature: type[dspy.Signature],
     records: list,
@@ -135,7 +146,21 @@ def _run_gepa(
         pred_name: Any = None,  # noqa: ARG001
         pred_trace: Any = None,  # noqa: ARG001
     ) -> float:
-        return 1.0 if getattr(pred, output_name, None) == getattr(gold, output_name) else 0.0
+        gold_val = getattr(gold, output_name, None)
+        pred_val = getattr(pred, output_name, None)
+        gold_obj = _parse_json_object(gold_val)
+        pred_obj = _parse_json_object(pred_val)
+        if gold_obj is not None and pred_obj is not None:
+            # Both sides decode to JSON objects -- score per-key agreement so
+            # whitespace and key order don't matter and GEPA sees a gradient
+            # when only some fields are wrong. Pure byte-match here returns
+            # 0.0 for every realistic LM output and GEPA stalls (#75).
+            keys = set(gold_obj) | set(pred_obj)
+            if not keys:
+                return 1.0
+            matches = sum(1 for k in keys if gold_obj.get(k) == pred_obj.get(k))
+            return matches / len(keys)
+        return 1.0 if pred_val == gold_val else 0.0
 
     with dspy.context(lm=lm):
         optimizer = dspy.GEPA(
