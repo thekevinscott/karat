@@ -39,6 +39,12 @@ No migration required.
 
 ---
 
+## Unreleased — `coax --optimizer gepa` rollout envelope
+
+No migration required.
+
+---
+
 ## Unreleased — try-pr skill
 
 No migration required.

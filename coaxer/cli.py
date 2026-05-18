@@ -47,7 +47,11 @@ def main() -> None:
 def _build_default_lm():
     from coaxer.lm import AgentLM
 
-    return AgentLM()
+    # GEPA rollouts ask the LM for one structured response per call. Default
+    # AgentLM enables every Claude Code tool and leaves max_turns unbounded,
+    # which turns each rollout into a full agentic session and makes
+    # `coax --optimizer gepa` orders of magnitude slower than it should be.
+    return AgentLM(tools=[], max_turns=1)
 
 
 if __name__ == "__main__":
