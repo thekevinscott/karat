@@ -3,6 +3,7 @@
 ## Unreleased
 
 ### Added
+- **`.claude/skills/try-pr/SKILL.md` — `/try-pr <PR#>` skill.** Adapted from [thekevinbot/template-lib](https://github.com/thekevinbot/template-lib/tree/main/.claude/skills/try-pr) for coaxer's Python/`uv` toolchain. Fetches a PR branch, runs `uv sync`, and prints the `uv run coax` invocation in one shot; preserves uncommitted work via stash-with-confirmation. Copy/pasted rather than installed via a plugin marketplace since it's the only skill we're consuming from that repo today.
 - **`.github/workflows/check.yml` — putitoutthere preflight check on every PR.** Calls `thekevinscott/putitoutthere/.github/workflows/check.yml@v0` to validate `putitoutthere.toml` (malformed TOML, duplicate package names, missing directories, glob mismatches) at review time rather than at release time. Adopts the new companion workflow recommended in putitoutthere's latest release; the rule-of-thumb is "green here = a release run from this commit would not surface configuration-level surprises." No build steps, no setup, no secrets. See [MIGRATIONS.md](MIGRATIONS.md#unreleased--putitoutthere-check-workflow).
 
 ### Fixed

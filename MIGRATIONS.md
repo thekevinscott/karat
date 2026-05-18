@@ -33,6 +33,12 @@ skipped a step).
 
 ---
 
+## Unreleased — try-pr skill
+
+No migration required.
+
+---
+
 ## Unreleased — putitoutthere check workflow
 
 No migration required.
